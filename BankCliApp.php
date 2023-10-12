@@ -18,8 +18,11 @@ class BankCliApp
         self::EXIT_APP => 'Exit'
     ];
 
- 
 
+    public function __construct()
+    {
+        $this->register = new Register(new FileStorage());
+    }
 
 
     public function run(): void
@@ -37,7 +40,7 @@ class BankCliApp
                 case self::Login:
                     $email    = readline("Enter your email: ");
                     $password = readline("Enter your password: ");
-
+                    // $this->register->logIntoAccount($email,$password);
 
                     break;
                 case self::Registration:

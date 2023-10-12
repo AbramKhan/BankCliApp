@@ -1,13 +1,18 @@
 <?php
 declare(strict_types=1);
 
-class MemberInfo
+class MemberInfo 
 {
 
     protected string $name  = '';
     protected string $email = '';
     protected string $pass  = '';
+    protected string $role ='';
 
+    public static function getModelName(): string
+    {
+        return 'users';
+    }
 
     public function getName(): string
     {
@@ -38,5 +43,16 @@ class MemberInfo
     public function setPass(string $pass): void
     {
         $this->pass = $pass;
+    }
+
+    
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): void
+    {
+        $this->role = $role;
     }
 }
