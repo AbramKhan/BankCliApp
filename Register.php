@@ -26,42 +26,40 @@ class Register
         $newMember->setPass($pass);
         $newMember->setRole(UserRole::CUSTOMER);
 
-        printf(count($this->registeredMembers));
-        
-        if(count($this->registeredMembers) == 0){
-            
-            $this->registeredMembers[] = $newMember;
-            $this->saveData();
-            var_dump($this->registeredMembers);
+        // printf(count($this->registeredMembers));
+
+        // if(count($this->registeredMembers) === 0){
+
+        //     $this->registeredMembers[] = $newMember;
+        //     $this->saveData();
+        //     var_dump($this->registeredMembers);
+        // }
+
+        // elseif(count($this->registeredMembers) > 0) {
+
+        // $isEmail = filter_var($email, FILTER_VALIDATE_EMAIL );
+
+        // if(isEmail)
+
+        $existingMember = $this->existMemberCheck($email);
+
+        if ($existingMember) {
+            // var_dump($this->registeredMembers);
+            printf('this user exist');
         }
-
-        elseif(count($this->registeredMembers) > 0) {
-
-            
-            $validateMember = $this->validateEmail($email);
-
-            if($validateMember){
-                $this->saveData();
-                var_dump($this->registeredMembers);
-                printf('congratulation');
-            }
-
-        }
-
-       
+        $this->registeredMembers[] = $newMember;
+        $this->saveData();
+        printf('congratulation');
     }
 
-    private function validateEmail($email): string
+    private function existMemberCheck($email): ? CreateMember
     {
-        foreach($this->registeredMembers as $member){
-            if($member->getEmail() !== $email){
-                return $email;
+        foreach ($this->registeredMembers as $member) {
+            if ($member->getEmail() == $email) {
+                return $member;
             }
-            return 'email has taken';
-            
         }
-        
-        
+        return null;
     }
 
     public function saveData(): void
