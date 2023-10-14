@@ -16,6 +16,8 @@ class FileStorage implements Storage
 
     public function load(string $model): array
     {
+        $data = [];
+
         if (file_exists($this->getModelPath($model))) {
             $data = unserialize(file_get_contents($this->getModelPath($model)));
         }

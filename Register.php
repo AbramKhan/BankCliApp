@@ -26,46 +26,56 @@ class Register
         $newMember->setPass($pass);
         $newMember->setRole(UserRole::CUSTOMER);
 
-        // printf(count($this->registeredMembers));
 
-        // if(count($this->registeredMembers) === 0){
 
-        //     $this->registeredMembers[] = $newMember;
-        //     $this->saveData();
-        //     var_dump($this->registeredMembers);
-        // }
+        $validEmail = $this->checkValidEmail($email);
 
-        // elseif(count($this->registeredMembers) > 0) {
+        print_r($validEmail);
 
-        // $isEmail = filter_var($email, FILTER_VALIDATE_EMAIL );
-
-        // if(isEmail)
-
-        $existingMember = $this->existMemberCheck($email);
-
-        if ($existingMember) {
-            // var_dump($this->registeredMembers);
-            printf('this user exist');
-        }
-        $this->registeredMembers[] = $newMember;
-        $this->saveData();
-        printf('congratulation');
+        
     }
 
-    private function existMemberCheck($email): ? CreateMember
-    {
-        foreach ($this->registeredMembers as $member) {
-            if ($member->getEmail() == $email) {
-                return $member;
+    private function checkValidEmail($email): ? CreateMember
+        {
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return $email;
+            } else {
+                echo 'The email address is invalid.';
             }
+            return null;
         }
-        return null;
-    }
 
-    public function saveData(): void
-    {
-        // var_dump($this->registeredMembers);
+        // $emailExist = $this->uniqueEmailCheck($email);
 
-        $this->storage->save(MemberInfo::getModelName(), $this->registeredMembers);
+        // if ($emailExist) {
+        //     // var_dump($this->registeredMembers);
+        //     printf('this user exist');
+
+        //     //close the accelarion
+        //     return;
+
+        // }
+        // $this->registeredMembers[] = $newMember;
+        // $this->saveData();
+        // printf('congratulation');
+    
+
+    // private function uniqueEmailCheck($email): ? CreateMember
+    // {
+    //     foreach ($this->registeredMembers as $member) {
+    //         if ($member->getEmail() == $email) {
+    //             return $member;
+    //         }
+    //     }
+    //     return null;
+    // }
+
+  
+    // public function saveData(): void
+    // {
+    //     // var_dump($this->registeredMembers);
+
+    //     $this->storage->save(MemberInfo::getModelName(), $this->registeredMembers);
+    // }
+
     }
-}
